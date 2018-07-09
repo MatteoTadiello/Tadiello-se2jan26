@@ -1,5 +1,5 @@
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 function check(url, invocationParameters,  expectedResultData, expectedResultStatus) {
 
@@ -11,7 +11,27 @@ function check(url, invocationParameters,  expectedResultData, expectedResultSta
         resultDataAsExpected: null
     }
 
+    const parameters = Object.keys(invocationParameters);
+    
+    if(parameters.length > 0){
+        checkResult.urlChecked += '?' +parameters[0] + '=' +encodeURI(invocationParameters[parameters[0]]);
 
+        for(let i=1; i<parameters.length; i++){
+            checkResult.urlChecked = '&' +parameters[i] + encodeURI(invocationParameters[parameters[i]);
+        }
+    }
+
+    return fetch(checkResult.urlChecked)
+        .then( (res) => {
+            checkResult.resultStatus = res.status;
+            checkResult.statusTestPassed = (checkResult.resultStatus === expectedResultStatus);
+
+            return res.json();
+        })
+        .then( (json => {
+            checkResult.resultData = json;
+            checkResult.resultDataAsExpected = compareResults(expectedResultData, checkResult.resultData)
+        }));
 
 }
 
