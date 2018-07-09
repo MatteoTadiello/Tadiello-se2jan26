@@ -17,7 +17,7 @@ app.get('/count',function (req, res) {
     res.json({count: 3})
 })
 
-app.get('/check',(req,res)=>{
+app.post('/check',(req,res)=>{
 	check(req.body.url,req.body.invocationParameters,req.body.expectedResultData,req.body.expectedResultStatus)
 	.then(result => {
 		res.status(200).json(result);

@@ -17,7 +17,7 @@ function check(url, invocationParameters,  expectedResultData, expectedResultSta
         checkResult.urlChecked += '?' +parameters[0] + '=' +encodeURI(invocationParameters[parameters[0]]);
 
         for(let i=1; i<parameters.length; i++){
-            checkResult.urlChecked = '&' +parameters[i] + encodeURI(invocationParameters[parameters[i]);
+            checkResult.urlChecked = '&' +parameters[i] + encodeURI(invocationParameters[parameters[i]]);
         }
     }
 
@@ -28,10 +28,10 @@ function check(url, invocationParameters,  expectedResultData, expectedResultSta
 
             return res.json();
         })
-        .then( (json => {
+        .then( (json) => {
             checkResult.resultData = json;
             checkResult.resultDataAsExpected = compareResults(expectedResultData, checkResult.resultData)
-        }));
+        });
 
 }
 
